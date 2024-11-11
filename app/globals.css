@@ -155,7 +155,7 @@
     @apply body-2 w-full pt-2 text-light-100 !important;
   }
   .shad-form-message {
-    @apply body-2 ml-4 text-red !important;
+    @apply body-2 text-red !important;
   }
   .shad-alert-dialog {
     @apply max-w-[95%] space-y-4 rounded-xl bg-white px-4 py-10 outline-none sm:w-fit md:rounded-[30px] md:px-8 !important;

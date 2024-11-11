@@ -3,31 +3,42 @@ import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import images from '@/public/index';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-const formSchema = z.object({
-  username: z.string().min(2).max(50),
-});
+type FormType = 'sign-up' | 'sign-in';
 
-type AuthFormProps = {
-  type: 'sign-up' | 'sign-in';
+const authFormSchema = (formType: FormType) => {
+  return z.object({
+    email: z.string().email(),
+    fullName:
+      formType === 'sign-up'
+        ? z.string().min(2).max(50)
+        : z.string().optional(),
+  });
 };
 
-const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
+const AuthForm = ({ type }: { type: FormType }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [errroMessage, setErrorMessage] = useState('');
+
+  const formSchema = authFormSchema(type);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: '',
+      fullName: '',
+      email: '',
     },
   });
 
@@ -36,27 +47,113 @@ const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-        <FormField
-          control={form.control}
-          name='username'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder='shadcn' {...field} />
-              </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
+    <>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className='auth-form'>
+          <h1 className='form-title'>
+            {type === 'sign-up' ? 'Sign Up' : 'Sign In'}
+          </h1>
+          {type === 'sign-up' && (
+            <>
+              <FormField
+                control={form.control}
+                name='fullName'
+                render={({ field }) => (
+                  <FormItem>
+                    <div className='shad-form-item'>
+                      <FormLabel className='shad-form-label'>
+                        Full Name
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder='Enter your full name'
+                          className='shad-input'
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage className='shad-form-message' />
+                    </div>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='email'
+                render={({ field }) => (
+                  <FormItem>
+                    <div className='shad-form-item'>
+                      <FormLabel className='shad-form-label'>Email</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder='Enter your email'
+                          className='shad-input'
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage className='shad-form-message' />
+                    </div>
+                  </FormItem>
+                )}
+              />
+            </>
           )}
-        />
-        <Button type='submit'>Submit</Button>
-      </form>
-    </Form>
+          {type === 'sign-in' && (
+            <>
+              <FormField
+                control={form.control}
+                name='email'
+                render={({ field }) => (
+                  <FormItem>
+                    <div className='shad-form-item'>
+                      <FormLabel className='shad-form-label'>Email</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder='Enter your email'
+                          className='shad-input'
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage className='shad-form-message' />
+                    </div>
+                  </FormItem>
+                )}
+              />
+            </>
+          )}
+          <Button
+            type='submit'
+            disabled={isLoading}
+            className='form-submit-button disabled:cursor-not-allowed'
+          >
+            {type === 'sign-up' ? 'Sign Up' : 'Sign In'}
+            {isLoading && (
+              <Image
+                src={images.loader}
+                width={24}
+                height={24}
+                alt='loader'
+                className='ml-2 animate-spin'
+              />
+            )}
+          </Button>
+          {errroMessage && <p className='error-message'>*{errroMessage}</p>}
+          <div className='body-2 flex justify-center'>
+            <p className='text-light-100'>
+              {type === 'sign-up'
+                ? 'Already have an account?'
+                : `Don't have an account?`}
+              <Link
+                href={type === 'sign-in' ? '/sign-up' : 'sign-in'}
+                className='ml-1 font-medium text-brand'
+              >
+                {type === 'sign-up' ? 'Sign In' : 'Sign Up'}
+              </Link>
+            </p>
+          </div>
+        </form>
+      </Form>
+      {/* OTP validation */}
+    </>
   );
 };
 
