@@ -4,10 +4,12 @@ import { Separator } from '@/components/ui/separator';
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
 import navs, { NavType } from '@/constants/navs';
+import { signOutUser } from '@/lib/actions/user.action';
 import { cn } from '@/lib/utils';
 import images from '@/public';
 import Image from 'next/image';
@@ -66,6 +68,7 @@ const MobileNavigation = ({
             </div>
             <Separator className='mb-4 bg-light-200/20' />
           </SheetTitle>
+          <SheetDescription></SheetDescription>
           <nav className='mobile-nav'>
             <ul className='mobile-nav-list'>
               {navs.map(({ name, url, icon }: NavType) => (
@@ -95,7 +98,11 @@ const MobileNavigation = ({
           <Separator className='my-5 bg-light-200/20' />
           <div className='flex flex-col justify-between gap-5'>
             <FileUploader />
-            <Button type='submit' className='mobile-sign-out-button'>
+            <Button
+              type='submit'
+              className='mobile-sign-out-button'
+              onClick={async () => await signOutUser()}
+            >
               <Image src={images.logout} alt='logout' width={24} height={24} />
               <p>Logout</p>
             </Button>
