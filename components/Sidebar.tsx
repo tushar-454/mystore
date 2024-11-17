@@ -8,7 +8,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const Sidebar = () => {
+interface SidebarProps {
+  fullName: string;
+  avatar: string;
+  email: string;
+}
+
+const Sidebar = ({ fullName, avatar, email }: SidebarProps) => {
   const pathName = usePathname();
 
   return (
@@ -64,15 +70,15 @@ const Sidebar = () => {
       />
       <div className='sidebar-user-info'>
         <Image
-          src={avatarPlaceholderUrl}
+          src={avatar || avatarPlaceholderUrl}
           alt='avatar'
           width={44}
           height={44}
           className='sidebar-user-avatar'
         />
         <div className='hidden lg:block'>
-          <p className='subtitle-2 capitalize'>{fullName}</p>
-          <p className='caption'>{email}</p>
+          <p className='subtitle-2 capitalize'>{fullName || 'Username'}</p>
+          <p className='caption'>{email || 'email'}</p>
         </div>
       </div>
     </aside>

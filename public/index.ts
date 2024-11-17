@@ -11,6 +11,7 @@ import logoBrand from './assets/icons/logo-brand.svg';
 import logoFullBrand from './assets/icons/logo-full-brand.svg';
 import logoFull from './assets/icons/logo-full.svg';
 import logout from './assets/icons/logout.svg';
+import menu from './assets/icons/menu.svg';
 import others from './assets/icons/others.svg';
 import share from './assets/icons/share.svg';
 import media from './assets/icons/video.svg';
@@ -36,6 +37,7 @@ const images = {
   download,
   delete: deleteIcon,
   files2,
+  menu,
 };
 
 export default images;
