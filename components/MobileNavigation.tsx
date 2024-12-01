@@ -20,7 +20,7 @@ import FileUploader from './FileUploader';
 import { Button } from './ui/button';
 
 interface MobileNavigationProps {
-  ownerId: string;
+  $id: string;
   accountId: string;
   fullName: string;
   avatar: string;
@@ -28,7 +28,7 @@ interface MobileNavigationProps {
 }
 
 const MobileNavigation = ({
-  ownerId,
+  $id: ownerId,
   accountId,
   fullName,
   avatar,
@@ -97,7 +97,7 @@ const MobileNavigation = ({
           </nav>
           <Separator className='my-5 bg-light-200/20' />
           <div className='flex flex-col justify-between gap-5'>
-            <FileUploader />
+            <FileUploader ownerId={ownerId} accountId={accountId} />
             <Button
               type='submit'
               className='mobile-sign-out-button'

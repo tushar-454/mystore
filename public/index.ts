@@ -4,6 +4,7 @@ import deleteIcon from './assets/icons/delete.svg';
 import documents from './assets/icons/documents.svg';
 import download from './assets/icons/download.svg';
 import rename from './assets/icons/edit.svg';
+import fileLoader from './assets/icons/file-loader.gif';
 import image from './assets/icons/images.svg';
 import details from './assets/icons/info.svg';
 import loader from './assets/icons/loader.svg';
@@ -13,7 +14,9 @@ import logoFull from './assets/icons/logo-full.svg';
 import logout from './assets/icons/logout.svg';
 import menu from './assets/icons/menu.svg';
 import others from './assets/icons/others.svg';
+import remove from './assets/icons/remove.svg';
 import share from './assets/icons/share.svg';
+import upload from './assets/icons/upload.svg';
 import media from './assets/icons/video.svg';
 import files2 from './assets/images/files-2.png';
 import files from './assets/images/files.png';
@@ -38,6 +41,9 @@ const images = {
   delete: deleteIcon,
   files2,
   menu,
+  upload,
+  fileLoader,
+  remove,
 };
 
 export default images;
