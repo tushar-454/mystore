@@ -3,7 +3,7 @@ import Sort from '@/components/Sort';
 import { getFiles } from '@/lib/actions/file.action';
 import { Models } from 'node-appwrite';
 
-const Page = async ({ params }: { params: { type: string } }) => {
+const Page = async ({ params }: { params: any }) => {
   const type = ((await params)?.type as string) || '';
 
   const files = await getFiles();

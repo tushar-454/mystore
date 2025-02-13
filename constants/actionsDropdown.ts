@@ -34,4 +34,4 @@ const actionsDropdown: ActionDropdownType[] = [
   },
 ];
 
-export default actionsDropdown;
+export { actionsDropdown };
