@@ -17,7 +17,29 @@ const Search = () => {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const path = usePathname();
-  const [debounceQuery] = useDebounce(query, 300);
+  const [debouncedQuery] = useDebounce(query, 300);
+
+  useEffect(() => {
+    const fetchFiles = async () => {
+      if (debouncedQuery.length === 0) {
+        setResults([]);
+        setOpen(false);
+        return router.push(path.replace(searchParams.toString(), ''));
+      }
+
+      const files = await getFiles({ types: [], searchText: debouncedQuery });
+      setResults(files.documents);
+      setOpen(true);
+    };
+
+    fetchFiles();
+  }, [debouncedQuery]);
+
+  useEffect(() => {
+    if (!searchQuery) {
+      setQuery('');
+    }
+  }, [searchQuery]);
 
   const handleClickItem = (file: Models.Document) => {
     setOpen(false);
@@ -28,25 +50,6 @@ const Search = () => {
     );
   };
 
-  useEffect(() => {
-    const fetchFiles = async () => {
-      if (debounceQuery.length === 0) {
-        setResults([]);
-        setOpen(false);
-        router.push(path.replace(searchParams.toString(), ''));
-      }
-      const files = await getFiles({ types: [], searchText: query });
-      setResults(files.documents);
-      setOpen(true);
-    };
-    fetchFiles();
-  }, [debounceQuery]);
-
-  useEffect(() => {
-    if (!searchQuery) {
-      setQuery('');
-    }
-  }, [searchQuery]);
   return (
     <div className='search'>
       <div className='search-input-wrapper'>
