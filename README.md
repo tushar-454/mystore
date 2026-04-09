@@ -1,7 +1,5 @@
 # StoreIt
 
-## Short Description
-
 StoreIt is a modern file storage manager built with Next.js and Appwrite. It lets users sign in with email OTP, upload files, organize content by type, and manage files with actions like rename, share, download, and delete.
 
 ## Features
