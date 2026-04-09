@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# StoreIt
+
+## Short Description
+
+StoreIt is a modern file storage manager built with Next.js and Appwrite. It lets users sign in with email OTP, upload files, organize content by type, and manage files with actions like rename, share, download, and delete.
+
+## Features
+
+- Email OTP authentication (sign up/sign in)
+- Secure session handling with Appwrite session cookies
+- File upload and storage with Appwrite Storage
+- File metadata persistence in Appwrite Database
+- File categories: documents, images, media, others
+- Search and sort files by date, name, and size
+- Dashboard usage overview with chart and recent uploads
+- File actions: rename, details, share, download, delete
+- Responsive layout with desktop sidebar and mobile navigation
+
+## Technology Stack
+
+- Next.js 15 (App Router, Server Actions)
+- React 19
+- TypeScript
+- Tailwind CSS
+- Appwrite (Auth, Database, Storage)
+- React Hook Form + Zod (form validation)
+- Radix UI (accessible primitives)
+- Recharts (dashboard chart)
+
+## Component Tree
+
+```text
+mystore/
+|-- app/
+|   |-- (auth)/
+|   |   |-- sign-in/page.tsx
+|   |   `-- sign-up/page.tsx
+|   |-- (root)/
+|   |   |-- page.tsx
+|   |   `-- [type]/page.tsx
+|   |-- globals.css
+|   `-- layout.tsx
+|-- components/
+|   |-- AuthForm.tsx
+|   |-- FileUploader.tsx
+|   |-- Card.tsx
+|   |-- ActionDropdown.tsx
+|   |-- ActionsModalContent.tsx
+|   |-- Chart.tsx
+|   |-- Search.tsx
+|   |-- Sort.tsx
+|   |-- Sidebar.tsx
+|   |-- MobileNavigation.tsx
+|   `-- ui/*
+|-- lib/
+|   |-- actions/
+|   |   |-- user.action.ts
+|   |   `-- file.action.ts
+|   |-- appwrite/
+|   |   |-- config.ts
+|   |   `-- index.ts
+|   `-- utils.ts
+|-- constants/
+|-- hooks/
+|-- public/
+`-- types/
+```
 
 ## Getting Started
 
-First, run the development server:
+### 1. Install dependencies
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+yarn install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Configure environment variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create a `.env.local` file in the project root:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+NEXT_PUBLIC_APPWRITE_ENDPOINT=
+NEXT_PUBLIC_APPWRITE_PROJECT=
+NEXT_PUBLIC_APPWRITE_DATABASE=
+NEXT_PUBLIC_APPWRITE_USERS_COLLECTION=
+NEXT_PUBLIC_APPWRITE_FILES_COLLECTION=
+NEXT_PUBLIC_APPWRITE_BUCKET=
+NEXT_PUBLIC_APPWRITE_SECRET=
+```
 
-## Learn More
+Set these values from your Appwrite project settings.
 
-To learn more about Next.js, take a look at the following resources:
+### 3. Prepare Appwrite resources
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Create a project in Appwrite
+- Create a database
+- Create two collections: users and files
+- Create one storage bucket for uploads
+- Update permissions to match your app requirements
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 4. Run the development server
 
-## Deploy on Vercel
+```bash
+yarn dev
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Open http://localhost:3000 in your browser.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Scripts
+
+- `yarn dev` - start development server
+- `yarn build` - create production build
+- `yarn start` - run production server
+- `yarn lint` - run lint checks
